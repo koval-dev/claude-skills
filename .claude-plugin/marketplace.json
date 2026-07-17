@@ -1,0 +1,17 @@
+{
+  "name": "kd-skills",
+  "owner": {
+    "name": "koval.dev"
+  },
+  "description": "Reusable Claude Code skills maintained by koval.dev.",
+  "metadata": {
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "art-directed-web-design",
+      "source": "./plugins/art-directed-web-design",
+      "description": "Transform an existing semantically structured web page into a polished, distinctive, typography-led and grid-based design, implemented directly in place."
+    }
+  ]
+}
