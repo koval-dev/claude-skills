@@ -7,6 +7,8 @@ Reusable [Claude Code](https://code.claude.com) skills maintained by koval.dev, 
 ```
 /plugin marketplace add koval-dev/claude-skills
 /plugin install art-directed-web-design@kd-skills
+/plugin install find-content-opportunities@kd-skills
+/plugin install dataforseo-connector@kd-skills
 ```
 
 Restart Claude Code (or run `/plugin`) if a newly installed skill doesn't show up immediately.
@@ -40,6 +42,21 @@ Commit this to a project's `.claude/settings.json` and teammates get the marketp
 | Plugin | What it does |
 | --- | --- |
 | `art-directed-web-design` | Turns a working but visually plain semantic page (Astro, HTML, JSX/TSX, Vue, Svelte) into an intentional, typography-led, grid-based composition — implemented directly in place, reusing the project's existing tokens and utilities. |
+| `find-content-opportunities` | Researches, scores, and prioritizes evidence-backed content opportunities (skyscraper topics, content gaps, topic clusters) for an existing project, then produces approvable opportunity briefs to hand to a writing skill. Vendor-neutral about data sources. |
+| `dataforseo-connector` | A secret-free connector to the DataForSEO API: keyword search volume, keyword ideas, a domain's ranked keywords, live SERP results, and competitor domains. Useful on its own and as a data source other skills build on. |
+
+## Connectors and credentials
+
+Some plugins are **connectors** — thin wrappers over an external API (for example `dataforseo-connector`). Connectors are safe to publish because they contain **no secrets**: they read credentials from environment variables at run time. To use one, set its variables in your own environment (or a gitignored `.env` you load before running):
+
+```
+export DATAFORSEO_LOGIN="your-login"
+export DATAFORSEO_PASSWORD="your-api-password"   # from app.dataforseo.com/api-access
+```
+
+Never commit real credentials. Each connector ships a `.env.example` template with placeholders only, and this repo's `.gitignore` excludes `.env` files.
+
+Skills stay independent but compose at run time: when both a data connector and a skill that can use its data are installed, the skill draws on the connector automatically — nothing is hardcoded between them. For example, `find-content-opportunities` is vendor-neutral about data sources, so it will use an available keyword/SERP connector such as `dataforseo-connector` for demand and competitor figures and otherwise fall back to web search, without ever inventing numbers.
 
 ## Repo layout
 
