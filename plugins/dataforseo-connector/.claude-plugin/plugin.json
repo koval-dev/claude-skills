@@ -1,0 +1,5 @@
+{
+  "name": "dataforseo-connector",
+  "description": "Query the DataForSEO API for keyword search volume, keyword ideas, a domain's ranked keywords, live SERP results, and competitor domains. Reads credentials from environment variables and ships no secrets. Useful on its own for quick SEO lookups and as a data source that other content and SEO skills can build on.",
+  "version": "1.0.0"
+}

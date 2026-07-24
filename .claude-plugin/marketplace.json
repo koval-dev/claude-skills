@@ -12,6 +12,16 @@
       "name": "art-directed-web-design",
       "source": "./plugins/art-directed-web-design",
       "description": "Transform an existing semantically structured web page into a polished, distinctive, typography-led and grid-based design, implemented directly in place."
+    },
+    {
+      "name": "find-content-opportunities",
+      "source": "./plugins/find-content-opportunities",
+      "description": "Discover, research, score, and prioritize evidence-backed content opportunities (including skyscraper topics and content gaps) for an existing project, and produce approvable opportunity briefs to hand to a separate writing skill."
+    },
+    {
+      "name": "dataforseo-connector",
+      "source": "./plugins/dataforseo-connector",
+      "description": "Query the DataForSEO API for keyword search volume, keyword ideas, a domain's ranked keywords, live SERP results, and competitor domains. Reads credentials from environment variables and ships no secrets."
     }
   ]
 }
