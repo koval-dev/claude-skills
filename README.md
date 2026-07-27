@@ -9,6 +9,7 @@ Reusable [Claude Code](https://code.claude.com) skills maintained by koval.dev, 
 /plugin install art-directed-web-design@kd-skills
 /plugin install find-content-opportunities@kd-skills
 /plugin install dataforseo-connector@kd-skills
+/plugin install task-management@kd-skills
 ```
 
 Restart Claude Code (or run `/plugin`) if a newly installed skill doesn't show up immediately.
@@ -44,6 +45,7 @@ Commit this to a project's `.claude/settings.json` and teammates get the marketp
 | `art-directed-web-design` | Turns a working but visually plain semantic page (Astro, HTML, JSX/TSX, Vue, Svelte) into an intentional, typography-led, grid-based composition — implemented directly in place, reusing the project's existing tokens and utilities. |
 | `find-content-opportunities` | Researches, scores, and prioritizes evidence-backed content opportunities (skyscraper topics, content gaps, topic clusters) for an existing project, then produces approvable opportunity briefs to hand to a writing skill. Vendor-neutral about data sources. |
 | `dataforseo-connector` | A secret-free connector to the DataForSEO API: keyword search volume, keyword ideas, a domain's ranked keywords, live SERP results, and competitor domains. Useful on its own and as a data source other skills build on. |
+| `task-management` | Platform-agnostic task management with schema validation, enrichment, and agent-tier routing. Use when creating, validating, enriching, or executing tasks from YAML-based task trackers. |
 
 ## Connectors and credentials
 
