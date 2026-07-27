@@ -1,0 +1,173 @@
+# Task Schema Contract
+# This file defines the universal task structure for YAML-based task trackers.
+# Both humans and agents should validate tasks against this schema.
+
+# ID prefix conventions
+idPrefixes:
+  BLOG: "CMS blog content"
+  SVC: "Service page edits"
+  IMG: "Image assets"
+  LINK: "Internal link building"
+  FC: "Fact-check / expert sign-off gates"
+  SEO: "SEO / structured data"
+  INFRA: "CMS infrastructure"
+  DOM: "Domain vs brand naming cleanup"
+  VER: "Owner verification tasks"
+
+# Enums
+enums:
+  area:
+    - blog
+    - service-page
+    - images
+    - linking
+    - fact-check
+    - seo
+    - cms
+    - naming
+
+  status:
+    - todo
+    - in_progress
+    - blocked
+    - done
+
+  priority:
+    - high
+    - medium
+    - low
+
+  owner:
+    - editor
+    - expert
+    - pm
+    - dev
+    - seo
+
+  target:
+    - sanity
+    - new-site
+    - old-site
+    - n/a
+
+  executionMode:
+    - autonomous
+    - ai-draft-human-review
+    - human-only
+
+# Required fields (must exist in every task)
+required:
+  - id
+  - title
+  - area
+  - status
+  - priority
+  - owner
+  - context
+  - source
+
+# Optional fields (for agent execution)
+optional:
+  acceptanceCriteria:
+    type: array
+    description: "Specific, testable conditions for completion"
+    itemSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          pattern: "^AC-[0-9]+$"
+        text:
+          type: string
+          description: "Human-readable criterion"
+        verification:
+          type: object
+          properties:
+            type:
+              enum: [grep, curl, query, schema_check, manual]
+            command:
+              type: string
+              description: "Runnable verification command"
+            expected:
+              type: string
+              description: "What pass looks like"
+
+  complexity:
+    type: integer
+    min: 1
+    max: 10
+    description: "Routing score for agent tier selection"
+
+  executionMode:
+    type: enum
+    values: [autonomous, ai-draft-human-review, human-only]
+    description: "Can an agent execute this end-to-end?"
+
+  guardrails:
+    type: array
+    description: "What the agent MUST NOT do"
+    itemType: string
+
+  validationCommands:
+    type: array
+    description: "Shell commands to verify completion"
+    itemType: string
+
+  requiredContext:
+    type: array
+    description: "Files/information needed for execution"
+    itemType: string
+
+  executionSteps:
+    type: array
+    description: "Step-by-step instructions (for user-involved tasks)"
+    itemType: string
+
+  subtasks:
+    type: array
+    description: "Breakdown of larger tasks"
+    itemSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        acRef:
+          type: array
+          itemType: string
+          description: "References to acceptanceCriteria ids"
+
+  blockedBy:
+    type: array
+    description: "Task IDs that must complete first"
+    itemType: string
+
+# Complexity scoring rubric
+complexityRubric:
+  description: "Factors that affect complexity score"
+  factors:
+    ownerExpertOrPm:
+      field: owner
+      values: [expert, pm]
+      impact: 3
+    hasBlockers:
+      field: blockedBy
+      condition: "non-empty"
+      impactPerItem: 1
+    pricingLegalTerms:
+      contextPattern: "ціна|вартість|price|legal|закон|наказ"
+      impact: 2
+    crossLocale:
+      condition: "task touches both uk and ru"
+      impact: 1
+    codeChange:
+      field: target
+      value: new-site
+      impact: 2
+    warningInContext:
+      contextPattern: "WARNING|CRITICAL|УВАГА|КРИТИЧНО"
+      impact: 2
+    mechanical:
+      contextPattern: "rename|deploy|перейменувати|розгорнути"
+      impact: -2

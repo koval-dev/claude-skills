@@ -1,0 +1,224 @@
+# Enriched Task Examples
+# These are examples of fully enriched tasks showing the target state.
+
+# Example 1: Technical Task (Blog Update)
+- id: BLOG-002
+  title: "Update live «Нові правила праці» post to the Jul-24 revision (uk body only)"
+  area: blog
+  status: blocked
+  priority: high
+  owner: editor
+  article: pravyla-pratsi-ta-vidpochynku-vodiiv-2026
+  page: null
+  target: sanity
+  blockedBy: [FC-007]
+  context: |
+    Staging renders the Jul-22 version; the Jul-24 file changed 273 lines. Refresh the UK
+    body: restructured driving-limits table, new Укртрансбезпека category-B note, refreshed
+    excerpt; update sources (drop zakon.rada №340 + Мінрозвитку explainer, add insat.org.ua).
+    Keep current slug (SEO-field changes are low priority). Do NOT touch RU yet.
+    Before publishing: apply DOM-001 — line 194 of the source file links to the dead domain
+    https://ліцензії.укр/chip-karta-vodiya/ and would ship a broken link with this update.
+  source: novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md
+  
+  # === ENRICHED FIELDS ===
+  acceptanceCriteria:
+    - id: AC-1
+      text: "UK body matches Jul-24 source file exactly"
+      verification:
+        type: query
+        target: sanity
+        query: "diff staging-body with source-file"
+        expected: "no differences"
+    - id: AC-2
+      text: "Line 194 uses лицензии.укр (not ліцензії.укр)"
+      verification:
+        type: grep
+        command: "grep -c 'ліцензії.укр' novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md"
+        expected: "output == 0"
+    - id: AC-3
+      text: "Sources updated: drop zakon.rada №340, add insat.org.ua"
+      verification:
+        type: grep
+        command: "grep -c 'insat.org.ua' novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md"
+        expected: "output >= 1"
+  
+  complexity: 4
+  executionMode: autonomous
+  
+  requiredContext:
+    - "raw/articles/novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md"
+    - "raw/articles/novi-pravyla-pratsi-vidpochynku-vodiiv-2026.previous-2026-07-22.md"
+    - "Sanity document: blogPost with slug pravyla-pratsi-ta-vidpochynku-vodiiv-2026"
+  
+  validationCommands:
+    - "grep -c 'ліцензії.укр' raw/articles/novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md"
+    - "grep -c 'insat.org.ua' raw/articles/novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md"
+  
+  guardrails:
+    - "Do not modify RU version in this task"
+    - "Do not change the slug (SEO field)"
+    - "Do not apply DOM-001 changes (separate task)"
+
+---
+
+# Example 2: User-Involved Task (Owner Verification)
+- id: VER-001
+  title: "Owner: verify 3 facts on the Код 95 page (pricing / term / Poland)"
+  area: fact-check
+  status: in_progress
+  priority: high
+  owner: pm
+  article: kartka-vodiia-chy-kod-95
+  page: /kod-95/
+  target: sanity
+  blockedBy: []
+  context: |
+    Потрібне підтвердження власника для сторінки «Код 95 для водія» (/kod-95/):
+    1. FAQ «Як зробити код 95 в Україні?»: зараз указано «Вартість платної консультації… 7500 грн».
+       Уточнити: 7500 грн — це офіційний державний платіж чи вартість консультації Центру?
+       Який окремий державний збір за оформлення (якщо є)?
+    2. FAQ «Як швидко можна зробити код 95?»: зараз «в середньому два тижні». Який реальний
+       строк з урахуванням навчання, іспиту та виготовлення картки?
+    3. FAQ «Код 95 в Польщі» і «Що таке Код 95?»: підтвердити або виправити твердження
+       «Український Код 95 не підходить для Польщі» та вимогу картки під час руху через Польщу
+       «навіть на підставі дозволу».
+    Після підтверджень застосувати правки у SVC-001.
+  source: article-driver-card-vs-code-95-ua.md
+  
+  # === ENRICHED FIELDS ===
+  acceptanceCriteria:
+    - id: AC-1
+      text: "Owner confirms: is 7500 грн government fee or Center's consultation fee?"
+      verification:
+        type: manual
+    - id: AC-2
+      text: "Owner confirms realistic timeline for Code 95 completion"
+      verification:
+        type: manual
+    - id: AC-3
+      text: "Owner confirms: does Ukrainian Code 95 work in Poland?"
+      verification:
+        type: manual
+  
+  complexity: 8
+  executionMode: human-only
+  
+  requiredContext:
+    - "Page: /kod-95/"
+    - "Article: article-driver-card-vs-code-95-ua.md"
+    - "FAQ sections: pricing, timeline, Poland"
+  
+  executionSteps:
+    - 1. "Open the page /kod-95/ in browser"
+    - 2. "Locate FAQ 'Як зробити код 95 в Україні?'"
+    - 3. "Confirm: is 7500 грн the government fee or Center's consultation fee?"
+    - 4. "Locate FAQ 'Як швидко можна зробити код 95?'"
+    - 5. "Confirm: what is the realistic timeline including training, exam, and card production?"
+    - 6. "Locate FAQ 'Код 95 в Польщі'"
+    - 7. "Confirm: does Ukrainian Code 95 work in Poland?"
+    - 8. "Reply with your answers to all 3 questions"
+
+---
+
+# Example 3: Expert Review Task (Legal)
+- id: FC-007
+  title: "Work/rest rules: lawyer review of exceptions + two transitional questions"
+  area: fact-check
+  status: todo
+  priority: high
+  owner: expert
+  article: pravyla-pratsi-ta-vidpochynku-vodiiv-2026
+  page: null
+  target: sanity
+  blockedBy: []
+  context: |
+    Lawyer to review the exceptions summary (mass/distance/purpose/type-of-carriage conditions);
+    confirm the two transitional questions (56-day document set; G2V2 for vehicles first
+    registered 1-25 July 2026) are genuinely resolved; cross-check with ЄУТР; do NOT add штрафи
+    without separate verification. Blocks BLOG-002.
+  source: novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md
+  
+  # === ENRICHED FIELDS ===
+  acceptanceCriteria:
+    - id: AC-1
+      text: "Lawyer confirms exceptions summary is accurate"
+      verification:
+        type: manual
+    - id: AC-2
+      text: "Lawyer confirms transitional questions are resolved"
+      verification:
+        type: manual
+    - id: AC-3
+      text: "Cross-check with ЄУТР completed"
+      verification:
+        type: manual
+  
+  complexity: 9
+  executionMode: human-only
+  
+  requiredContext:
+    - "Article: novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md"
+    - "Legal reference: ЄУТР (European Agreement concerning the Work of Crews of Vehicles engaged in International Road Transport)"
+    - "Regulation: Ukrainian transport law"
+  
+  executionSteps:
+    - 1. "Read the exceptions summary in the article"
+    - 2. "Review each exception condition (mass/distance/purpose/type-of-carriage)"
+    - 3. "Confirm if exceptions are legally accurate"
+    - 4. "Review transitional question 1: 56-day document set"
+    - 5. "Review transitional question 2: G2V2 for vehicles first registered 1-25 July 2026"
+    - 6. "Cross-check with ЄУТР text"
+    - 7. "Confirm if both questions are genuinely resolved"
+    - 8. "Do NOT add штрафи (fines) without separate verification"
+    - 9. "Reply with your assessment and any corrections needed"
+
+---
+
+# Example 4: Simple Technical Task (Link Fix)
+- id: DOM-001
+  title: "Replace all ліцензії.укр with лицензии.укр in raw articles"
+  area: naming
+  status: in_progress
+  priority: high
+  owner: editor
+  article: null
+  page: null
+  target: sanity
+  blockedBy: []
+  context: |
+    The registered domain is лицензии.укр (= xn--e1aebcanq4e.xn--j1amh).
+    The Ukrainian-looking «ліцензії.укр» is a DIFFERENT, unregistered domain.
+    Replace all occurrences in raw article files.
+  source: raw/articles/
+  
+  # === ENRICHED FIELDS ===
+  acceptanceCriteria:
+    - id: AC-1
+      text: "No occurrences of ліцензії.укр in raw articles"
+      verification:
+        type: grep
+        command: "grep -r 'ліцензії.укр' raw/articles/ --include='*.md' -l | wc -l"
+        expected: "output == 0"
+    - id: AC-2
+      text: "All occurrences replaced with лицензии.укр"
+      verification:
+        type: grep
+        command: "grep -r 'лицензии.укр' raw/articles/ --include='*.md' -l | wc -l"
+        expected: "output >= 1"
+  
+  complexity: 2
+  executionMode: autonomous
+  
+  requiredContext:
+    - "Directory: raw/articles/"
+    - "Wrong spelling: ліцензії.укр"
+    - "Correct spelling: лицензии.укр"
+  
+  validationCommands:
+    - "grep -r 'ліцензії.укр' raw/articles/ --include='*.md' -l"
+    - "grep -r 'лицензии.укр' raw/articles/ --include='*.md' -l"
+  
+  guardrails:
+    - "Do not change brand name (Центр Ліцензій), only domain spelling"
+    - "Do not modify URLs that are already correct"
