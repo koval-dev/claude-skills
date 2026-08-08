@@ -1,6 +1,6 @@
 ---
 name: find-content-opportunities
-description: Discover, research, classify, score, and prioritize evidence-backed content opportunities for a business before drafting begins. Use when the user asks for article ideas, skyscraper opportunities, content gaps, topic clusters, topical-authority plans, competitor or search-result gaps, regulatory content opportunities, editorial roadmaps, or a decision to create, update, merge, narrow, monitor, or reject a topic. Produce research-backed opportunity briefs that can be approved and passed to a separate article-writing skill. Do not use this skill to draft the final article.
+description: Discovers, researches, classifies, scores, and prioritizes evidence-backed content opportunities for a business before drafting begins. Use when the user asks for article ideas, skyscraper opportunities, content gaps, topic clusters, topical-authority plans, competitor or search-result gaps, regulatory content opportunities, editorial roadmaps, or a decision to create, update, merge, narrow, monitor, or reject a topic. Produce research-backed opportunity briefs that can be approved and passed to a separate article-writing skill. Do not use this skill to draft the final article.
 argument-hint: [service-or-topic]
 ---
 

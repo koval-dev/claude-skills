@@ -1,7 +1,7 @@
 {
   "name": "task-management",
   "description": "Platform-agnostic task management with schema validation, enrichment, and agent-tier routing. Works with YAML-based task trackers across projects.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "skills": [
     "./skills/task-management",
     "./skills/task-enrichment"

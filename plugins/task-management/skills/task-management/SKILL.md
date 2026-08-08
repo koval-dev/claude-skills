@@ -1,13 +1,22 @@
 ---
 name: task-management
-description: Use when working with YAML-based task trackers — validating tasks, finding tasks.yaml, understanding task schema, routing tasks to agent tiers, or checking task dependencies. Applies to any project with structured task files.
+description: Validate, discover, and route YAML-based task trackers — check task schema and dependencies, locate tasks.yaml, and route tasks to agent tiers by complexity. Use when validating tasks, understanding the task schema, checking dependencies, or preparing tasks for execution. Applies to any project with structured task files. Does not enrich tasks or invent work — see the task-enrichment skill for adding acceptance criteria and context.
+argument-hint: [tasks-file-or-project-path]
 ---
 
 # Task Management
 
-Core skill for YAML-based task management. Provides schema reference, validation, project discovery, and agent-tier routing.
+Core skill for YAML-based task management: schema reference, validation, project discovery, and agent-tier routing.
 
-## Project Discovery
+## Working boundary
+
+- Validate, discover, route, and resolve dependencies for existing tasks.
+- Do not invent tasks, brainstorm work, or rewrite a task's intent.
+- Do not add acceptance criteria, complexity, or execution context — that is the
+  `task-enrichment` skill's job.
+- Never maintain task status in two places; the tracker file is authoritative.
+
+## Project discovery
 
 Find `tasks.yaml` in the current project:
 
@@ -22,11 +31,11 @@ Search logic (from project root upward):
 3. `../tasks/tasks.yaml`
 4. Continue until found or root reached
 
-## Task Schema
+## Task schema
 
 Read `references/schema.yaml` for the full schema definition.
 
-### Required Fields
+### Required fields
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -39,7 +48,7 @@ Read `references/schema.yaml` for the full schema definition.
 | `context` | string | WHY + source notes (free text) |
 | `source` | string | Provenance file reference |
 
-### Agent-Execution Fields (Optional, for enrichment)
+### Agent-execution fields (optional, for enrichment)
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -78,7 +87,7 @@ Adds empty arrays/defaults for missing optional fields:
 
 Does NOT modify existing fields.
 
-## Agent Tier Routing
+## Agent tier routing
 
 Route tasks to appropriate model based on complexity:
 
@@ -90,7 +99,7 @@ Route tasks to appropriate model based on complexity:
 | 7-8 | Requires judgment, business rules, legal context | Opus, o1 |
 | 9-10 | Legal/regulatory, irreversible, external verification | Human-led |
 
-### Complexity Factors
+### Complexity factors
 
 | Factor | Impact |
 |--------|--------|
@@ -102,7 +111,7 @@ Route tasks to appropriate model based on complexity:
 | WARNING/CRITICAL in context | +2 |
 | Purely mechanical (rename, deploy) | -2 |
 
-## Dependency Resolution
+## Dependency resolution
 
 Tasks with `blockedBy` must wait for dependencies to complete:
 
@@ -116,7 +125,7 @@ Check dependency status:
 2. Verify each referenced task has `status: done`
 3. If any blocker is not done, task remains `blocked`
 
-## Usage Examples
+## Usage examples
 
 ### Validate before execution
 

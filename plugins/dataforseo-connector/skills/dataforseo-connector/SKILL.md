@@ -1,6 +1,6 @@
 ---
 name: dataforseo-connector
-description: Pull real search data from the DataForSEO API — keyword search volume, keyword ideas, the keywords a domain already ranks for, live Google SERP results, and competitor domains. Use when the user asks for search volume, keyword difficulty, ranked keywords, SERP or top-10 results, or competitor domains for a keyword or website, or when another skill needs live demand and competitor evidence. Credentials are read from environment variables; the connector never stores or commits secrets. If credentials are missing, report that clearly instead of inventing numbers.
+description: Pulls real search data from the DataForSEO API — keyword search volume, keyword ideas, the keywords a domain already ranks for, live Google SERP results, and competitor domains. Use when the user asks for search volume, keyword difficulty, ranked keywords, SERP or top-10 results, or competitor domains for a keyword or website, or when another skill needs live demand and competitor evidence. Credentials are read from environment variables; the connector never stores or commits secrets. If credentials are missing, report that clearly instead of inventing numbers.
 argument-hint: [keyword-or-domain]
 ---
 

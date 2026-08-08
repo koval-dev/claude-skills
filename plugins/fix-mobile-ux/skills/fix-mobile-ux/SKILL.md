@@ -1,6 +1,7 @@
 ---
 name: fix-mobile-ux
 description: Audits and repairs a defined web UI scope for mobile usability and a credible iOS and Android native feel. Use when a route, component, folder, screen, or user flow needs responsive layout fixes, safe-area handling, touch targets, mobile navigation, sheets and dialogs, keyboard behavior, interaction states, accessibility, or mobile polish. It inspects the existing design system, changes the code, and verifies the result without redesigning unrelated areas.
+argument-hint: [file-route-component-or-flow]
 ---
 
 # Fix Mobile UX

@@ -1,6 +1,6 @@
 ---
 name: art-directed-web-design
-description: Transform an existing semantically structured web page into a polished, distinctive, typography-led and grid-based design while preserving its content, accessibility, project conventions, and existing design tokens. Use when an Astro, HTML, JSX, TSX, Vue, Svelte, or similar page already has sections and content but looks plain, minimally spaced, unfinished, or visually generic, and the user wants the strongest design direction implemented directly rather than receiving mockups, screenshots, or several design options.
+description: Transforms an existing semantically structured web page into a polished, distinctive, typography-led and grid-based design while preserving its content, accessibility, project conventions, and existing design tokens. Use when an Astro, HTML, JSX, TSX, Vue, Svelte, or similar page already has sections and content but looks plain, minimally spaced, unfinished, or visually generic, and the user wants the strongest design direction implemented directly rather than receiving mockups, screenshots, or several design options.
 argument-hint: [page-file-or-route]
 ---
 

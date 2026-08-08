@@ -1,14 +1,14 @@
 ---
 name: task-enrichment
-description: Use when enriching tasks with acceptance criteria, complexity estimates, and minimal context for agent execution. Triggered by "enrich tasks", "add acceptance criteria", "prepare tasks for agents", "scope task context". Does NOT brainstorm ideas — only scopes what's needed for completion.
+description: Enriches existing tasks with acceptance criteria, complexity estimates, and the minimal context an agent needs to execute them. Use when enriching tasks, adding acceptance criteria, preparing tasks for agents, or scoping task context — triggered by phrases like "enrich tasks" or "prepare tasks for agents". Does NOT brainstorm or generate ideas; it only scopes what existing tasks need for completion.
 argument-hint: [task-id-or-area]
 ---
 
 # Task Enrichment
 
-Scope minimum required context for task completion. This skill does NOT generate ideas or brainstorm — it analyzes existing tasks and identifies what's needed to execute them.
+Scope the minimum required context for task completion. This skill does NOT generate ideas or brainstorm — it analyzes existing tasks and identifies what's needed to execute them.
 
-## When to Use
+## When to use
 
 - User says "enrich tasks" or "prepare tasks for agents"
 - Before delegating tasks to simpler agent models
@@ -17,7 +17,7 @@ Scope minimum required context for task completion. This skill does NOT generate
 
 ## Process
 
-### 1. Discover Tasks
+### 1. Discover tasks
 
 ```bash
 # Find tasks.yaml
@@ -29,7 +29,7 @@ yq '.tasks[] | select(.acceptanceCriteria == null or .complexity == null) | .id 
 
 If user specifies a task ID or area, filter to those tasks.
 
-### 2. Analyze Each Task
+### 2. Analyze each task
 
 For each task to enrich:
 
@@ -41,11 +41,11 @@ For each task to enrich:
 4. **Determine minimal context**: What files/information are absolutely required?
 5. **Propose acceptance criteria**: What "done" looks like
 
-### 3. Generate Enrichment
+### 3. Generate enrichment
 
 For each task, generate:
 
-#### For Technical Tasks (autonomous or ai-draft-human-review)
+#### For technical tasks (autonomous or ai-draft-human-review)
 
 ```yaml
 acceptanceCriteria:
@@ -67,7 +67,7 @@ guardrails:
   - "Do not touch Y until Z is confirmed"
 ```
 
-#### For User-Involved Tasks (human-only)
+#### For user-involved tasks (human-only)
 
 ```yaml
 acceptanceCriteria:
@@ -87,7 +87,7 @@ executionSteps:
   4. "Reply with your answer"
 ```
 
-### 4. Confirm with User
+### 4. Confirm with the user
 
 Show the enrichment proposal for each task:
 
@@ -123,23 +123,23 @@ Run validation script to confirm enrichment is correct:
 ./scripts/validate-tasks.sh "$TASKS_FILE"
 ```
 
-## Enrichment Rules
+## Enrichment rules
 
-### Acceptance Criteria Must Be
+### Acceptance criteria must be
 
 1. **Specific**: "FAQ shows 7500 грн" not "pricing is correct"
 2. **Testable**: Each criterion should have a verification method
 3. **Minimal**: Only what's needed to confirm completion
 4. **Traceable**: Reference specific files, sections, or document IDs
 
-### Context Must Be Minimal
+### Context must be minimal
 
 - Include only files the agent MUST read
 - Reference specific sections, not entire documents
 - For Sanity: specify document type and ID, not "all service pages"
 - For code: specify file paths, not "the entire codebase"
 
-### Complexity Scoring
+### Complexity scoring
 
 Use the rubric from task-management skill:
 
@@ -161,7 +161,7 @@ Always include what the agent MUST NOT do:
 - Don't touch dependencies
 - Don't make irreversible changes without confirmation
 
-## Example: Enriching BLOG-002
+## Example: enriching BLOG-002
 
 Input task:
 ```yaml
@@ -184,7 +184,7 @@ acceptanceCriteria:
       query: "diff staging-body with source-file"
       expected: "no differences"
   - id: AC-2
-    text: "Line 194 usesлицензии.укр (not ліцензії.укр)"
+    text: "Line 194 uses лицензии.укр (not ліцензії.укр)"
     verification:
       type: grep
       command: "grep -c 'ліцензії.укр' novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md"
