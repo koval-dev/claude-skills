@@ -27,6 +27,11 @@
       "name": "task-management",
       "source": "./plugins/task-management",
       "description": "Platform-agnostic task management with schema validation, enrichment, and agent-tier routing. Use when creating, validating, enriching, or executing tasks from YAML-based task trackers."
+    },
+    {
+      "name": "fix-mobile-ux",
+      "source": "./plugins/fix-mobile-ux",
+      "description": "Audit and repair a scoped web UI for mobile usability and a credible iOS and Android native feel — responsive layout, safe areas, touch targets, mobile navigation, sheets, keyboard, and accessibility — inspecting the existing design system and verifying without redesigning unrelated areas."
     }
   ]
 }

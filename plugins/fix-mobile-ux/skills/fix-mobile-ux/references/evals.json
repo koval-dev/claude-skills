@@ -1,0 +1,35 @@
+[
+  {
+    "name": "checkout-safe-area-and-keyboard",
+    "query": "/fix-mobile-ux src/pages/checkout; focus: sticky payment action, form keyboard, safe areas",
+    "expected_behavior": [
+      "Limits edits to checkout and necessary shared dependencies",
+      "Finds bottom action overlap, keyboard obstruction, target-size, and validation issues",
+      "Implements fixes rather than returning only an audit",
+      "Uses existing tokens and semantic form controls",
+      "Runs relevant checks and reports exact viewport coverage"
+    ]
+  },
+  {
+    "name": "mobile-navigation-and-back",
+    "query": "/fix-mobile-ux route /dashboard; focus: bottom navigation, filter sheet, Android Back behavior",
+    "expected_behavior": [
+      "Preserves route history and deep links",
+      "Keeps navigation outside gesture and safe-area regions",
+      "Adds clear active, pressed, focus, and accessible-label states",
+      "Verifies sheet dismissal, focus restoration, and content offset",
+      "Avoids turning the whole product into an Android visual clone"
+    ]
+  },
+  {
+    "name": "audit-only-component",
+    "query": "/fix-mobile-ux audit-only src/components/BookingForm.tsx",
+    "expected_behavior": [
+      "Does not edit files",
+      "Ranks findings by P0 through P3",
+      "Checks labels, input semantics, virtual keyboard risk, errors, touch targets, and loading state",
+      "Names the inspection and test limitations",
+      "Does not expand the audit to unrelated screens"
+    ]
+  }
+]

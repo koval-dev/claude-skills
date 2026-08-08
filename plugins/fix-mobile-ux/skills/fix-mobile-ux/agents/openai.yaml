@@ -1,0 +1,3 @@
+interface:
+  display_name: "Fix Mobile UX"
+  short_description: "Audit and repair scoped mobile web UI for iOS and Android"
