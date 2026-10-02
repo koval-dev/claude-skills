@@ -1,5 +1,7 @@
 # Output contract
 
+Contents: Business brief · Discovery report · Opportunity-brief field rules · Handoff
+
 Produce enough detail for approval and downstream writing without repeating the research.
 
 ## Business brief

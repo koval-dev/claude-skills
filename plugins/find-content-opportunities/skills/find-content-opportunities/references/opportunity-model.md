@@ -1,5 +1,7 @@
 # Opportunity model
 
+Contents: Evidence layers · Signal strength · Content types · Intent and journey · Hard gates · Skyscraper gate · Cannibalization test · Scoring model · Candidate selection · Source record
+
 Use this reference to classify evidence, reject weak candidates, score survivors, and choose the correct editorial action.
 
 ## Evidence layers

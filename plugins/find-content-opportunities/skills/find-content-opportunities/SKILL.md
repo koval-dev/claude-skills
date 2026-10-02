@@ -1,7 +1,10 @@
 ---
 name: find-content-opportunities
-description: Discovers, researches, classifies, scores, and prioritizes evidence-backed content opportunities for a business before drafting begins. Use when the user asks for article ideas, skyscraper opportunities, content gaps, topic clusters, topical-authority plans, competitor or search-result gaps, regulatory content opportunities, editorial roadmaps, or a decision to create, update, merge, narrow, monitor, or reject a topic. Produce research-backed opportunity briefs that can be approved and passed to a separate article-writing skill. Do not use this skill to draft the final article.
+description: Finds and prioritizes evidence-backed content opportunities for a business before any drafting: article ideas, content gaps, skyscraper opportunities, topic clusters, topical-authority plans, competitor and search-result gaps, regulatory content, editorial roadmaps. Decides create, update, merge, narrow, monitor, or reject per topic, scores candidates with a script, and returns approvable opportunity briefs for a separate writing skill. Use when planning what to publish or whether a topic deserves a new page. Does not draft the article.
 argument-hint: [service-or-topic]
+metadata:
+  last-reviewed: "2026-10-02"
+  reviewed-against: "Claude Code 2.1.285; code.claude.com/docs/en/skills; developers.google.com/search/docs/appearance/ai-features"
 ---
 
 # Find Content Opportunities
@@ -22,7 +25,7 @@ Use the templates when a project lacks a reusable brief:
 - [assets/business-brief-template.md](assets/business-brief-template.md)
 - [assets/opportunity-brief-template.md](assets/opportunity-brief-template.md)
 
-Use `scripts/score_opportunity.py` to score surviving candidates when a run compares more than one candidate or when a reproducible score is requested.
+Use `${CLAUDE_SKILL_DIR}/scripts/score_opportunity.py` to score surviving candidates when a run compares more than one candidate or when a reproducible score is requested.
 
 ## Working boundary
 
@@ -100,7 +103,7 @@ Gather the strongest available signals:
 - backlink or citation patterns;
 - internal operational data and expert experience.
 
-Use supplied exports or connected data when available. Do not block a discovery run merely because paid SEO tools are unavailable.
+Use supplied exports or connected data when available, such as the dataforseo-connector skill. AI Overviews and AI Mode traffic has no separate Search Console report; it is counted in the Web search type. Do not block a discovery run merely because paid SEO tools are unavailable.
 
 ### 5. Generate candidates from intersections
 
@@ -127,8 +130,9 @@ For each serious candidate:
 1. Inspect representative current results, prioritizing top organic results, official sources, cited resources, and result features.
 2. Identify what the results answer well.
 3. Identify material gaps: outdated facts, fragmented instructions, missing edge cases, weak sourcing, poor local relevance, absent tools, or unclear action steps.
-4. Define a contribution the business can credibly produce.
-5. Reject the candidate if the only advantage is greater length or cosmetic restructuring.
+4. Note whether an AI Overview or AI Mode answer appears, which sources it cites, and whether it already satisfies the need. A satisfied AI answer is evidence for the answer-gap gate, not a separate optimization target.
+5. Define a contribution the business can credibly produce.
+6. Reject the candidate if the only advantage is greater length or cosmetic restructuring.
 
 Do not copy a competitor’s structure, wording, claims, or proprietary data.
 
@@ -166,7 +170,7 @@ When a service page already owns the intent, route missing transactional facts t
 Score only candidates that pass the gates. Use the scoring tool for consistent arithmetic:
 
 ```bash
-python3 scripts/score_opportunity.py candidate.json
+python3 ${CLAUDE_SKILL_DIR}/scripts/score_opportunity.py candidate.json
 ```
 
 Keep the criterion ratings, evidence notes, deductions, and editorial judgment visible. A high score cannot override a failed gate or a cannibalization finding.

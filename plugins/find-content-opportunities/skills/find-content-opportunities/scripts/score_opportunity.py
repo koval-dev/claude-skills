@@ -156,6 +156,8 @@ def calculate(payload: dict[str, Any]) -> dict[str, Any]:
         note = "The editorial route overrides the numeric threshold because a hard gate failed."
     elif gate_failures:
         note = "A failed hard gate overrides the numeric threshold."
+    elif editorial_route is not None and score_threshold == "reject":
+        note = "The editorial route conflicts with a below-50 score; justify the override."
     else:
         note = "Apply cannibalization and owner-page judgment before production."
 
