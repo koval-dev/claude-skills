@@ -1,5 +1,7 @@
 # Acceptance Criteria Patterns by Area
 
+Contents: Blog (BLOG-*) · Service Page (SVC-*) · Images (IMG-*) · Linking (LINK-*) · Fact-Check (FC-*) · SEO (SEO-*) · CMS (INFRA-*) & Naming (DOM-*)
+
 Task-specific patterns for generating acceptance criteria.
 
 ## Blog (BLOG-*)
@@ -244,7 +246,7 @@ requiredContext:
 validationCommands:
   - "curl -s 'https://search.google.com/test/rich-results?url={url}'"
 guardrails:
-  - "Do not add虚假 ratings"
+  - "Do not add false ratings"
   - "Do not use prohibited schema types"
 ```
 

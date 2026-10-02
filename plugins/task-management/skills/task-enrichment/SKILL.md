@@ -1,19 +1,21 @@
 ---
 name: task-enrichment
-description: Enriches existing tasks with acceptance criteria, complexity estimates, and the minimal context an agent needs to execute them. Use when enriching tasks, adding acceptance criteria, preparing tasks for agents, or scoping task context — triggered by phrases like "enrich tasks" or "prepare tasks for agents". Does NOT brainstorm or generate ideas; it only scopes what existing tasks need for completion.
+description: Enriches existing tasks in a tasks.yaml file with acceptance criteria, complexity scores, guardrails, and the minimal context an agent needs to execute them. Use when asked to enrich tasks, add acceptance criteria, or prepare tasks.yaml entries for agent execution. Applies only to repos whose tracker is a tasks.yaml file; not for GitHub-tracked projects or generated snapshot files. Scopes what existing tasks need and does not invent work.
 argument-hint: [task-id-or-area]
+metadata:
+  last-reviewed: "2026-10-02"
+  reviewed-against: "Claude Code 2.1.285; code.claude.com/docs/en/skills"
 ---
 
 # Task Enrichment
 
-Scope the minimum required context for task completion. This skill does NOT generate ideas or brainstorm — it analyzes existing tasks and identifies what's needed to execute them.
+Scope the minimum required context for task completion. It does not generate ideas or brainstorm; it analyzes existing tasks and identifies what's needed to execute them.
 
-## When to use
+## Stop rule: file trackers only
 
-- User says "enrich tasks" or "prepare tasks for agents"
-- Before delegating tasks to simpler agent models
-- When tasks lack acceptance criteria or execution guidance
-- When scoping what context an agent needs
+Before any write, check the tracker. If `project.yaml` sets `tasks.tracker` to anything other than `file` (for example `github-projects`), or the file is a generated snapshot (`tasks/snapshot.yaml`, or a header saying it is generated or not to be edited), read it but write nothing: no `--fix`, no `yq -i`. Changes belong in the tracker that owns the tasks; say so to the user.
+
+The helper script lives in the sibling task-management skill and needs `yq` and `jq`.
 
 ## Process
 
@@ -21,7 +23,7 @@ Scope the minimum required context for task completion. This skill does NOT gene
 
 ```bash
 # Find tasks.yaml
-TASKS_FILE=$(./scripts/validate-tasks.sh --find)
+TASKS_FILE=$(${CLAUDE_SKILL_DIR}/../task-management/scripts/validate-tasks.sh --find)
 
 # List tasks needing enrichment
 yq '.tasks[] | select(.acceptanceCriteria == null or .complexity == null) | .id + " " + .title' "$TASKS_FILE"
@@ -104,7 +106,7 @@ Proposed enrichment:
 Proceed? [y/n]
 ```
 
-Wait for user approval before writing.
+Wait for user approval before writing. Apply the stop rule again here: if the target is not a writable `tasks.yaml`, give the user the approved enrichment to paste into the tracker instead.
 
 ### 5. Write to tasks.yaml
 
@@ -120,7 +122,7 @@ yq -i "(.tasks[] | select(.id == \"VER-001\") | .acceptanceCriteria) = [...]" "$
 Run validation script to confirm enrichment is correct:
 
 ```bash
-./scripts/validate-tasks.sh "$TASKS_FILE"
+${CLAUDE_SKILL_DIR}/../task-management/scripts/validate-tasks.sh "$TASKS_FILE"
 ```
 
 ## Enrichment rules
@@ -134,78 +136,25 @@ Run validation script to confirm enrichment is correct:
 
 ### Context must be minimal
 
-- Include only files the agent MUST read
+- Include only files the agent must read
 - Reference specific sections, not entire documents
 - For Sanity: specify document type and ID, not "all service pages"
 - For code: specify file paths, not "the entire codebase"
 
 ### Complexity scoring
 
-Use the rubric from task-management skill:
-
-| Factor | Impact |
-|--------|--------|
-| `owner: expert` or `owner: pm` | +3 |
-| `blockedBy` non-empty | +1 per blocker |
-| Pricing/legal terms in context | +2 |
-| Cross-locale (uk + ru) | +1 |
-| `target: new-site` (code change) | +2 |
-| WARNING/CRITICAL in context | +2 |
-| Purely mechanical | -2 |
+Use the complexity factors in the task-management skill, so the two skills cannot drift apart.
 
 ### Guardrails
 
-Always include what the agent MUST NOT do:
+Always include what the agent must not do:
 - Don't modify files outside scope
 - Don't change related locales until primary is confirmed
 - Don't touch dependencies
 - Don't make irreversible changes without confirmation
 
-## Example: enriching BLOG-002
+## References
 
-Input task:
-```yaml
-- id: BLOG-002
-  title: "Update live «Нові правила праці» post"
-  context: |
-    Staging renders the Jul-22 version; the Jul-24 file changed 273 lines.
-    Refresh the UK body... Before publishing: apply DOM-001...
-  source: novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md
-```
-
-Output enrichment:
-```yaml
-acceptanceCriteria:
-  - id: AC-1
-    text: "UK body matches Jul-24 source file exactly"
-    verification:
-      type: query
-      target: sanity
-      query: "diff staging-body with source-file"
-      expected: "no differences"
-  - id: AC-2
-    text: "Line 194 uses лицензии.укр (not ліцензії.укр)"
-    verification:
-      type: grep
-      command: "grep -c 'ліцензії.укр' novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md"
-      expected: "output == 0"
-  - id: AC-3
-    text: "Sources updated: drop zakon.rada №340, add insat.org.ua"
-    verification:
-      type: grep
-      command: "grep -c 'insat.org.ua' novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md"
-      expected: "output >= 1"
-complexity: 4
-executionMode: autonomous
-requiredContext:
-  - "raw/articles/novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md"
-  - "raw/articles/novi-pravyla-pratsi-vidpochynku-vodiiv-2026.previous-2026-07-22.md"
-  - "Sanity document: blogPost with slug pravyla-pratsi-ta-vidpochynku-vodiiv-2026"
-validationCommands:
-  - "grep -c 'ліцензії.укр' raw/articles/novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md"
-  - "grep -c 'insat.org.ua' raw/articles/novi-pravyla-pratsi-vidpochynku-vodiiv-2026.md"
-guardrails:
-  - "Do not modify RU version in this task"
-  - "Do not change the slug (SEO field)"
-  - "Do not apply DOM-001 changes (separate task)"
-```
+- [references/enrichment-guide.md](references/enrichment-guide.md): task-type identification, context scoring, and the enrichment checklist.
+- [references/ac-patterns-by-area.md](references/ac-patterns-by-area.md): acceptance-criteria patterns per task area. Read the section for the task's area only.
+- [seeds/enriched-example.yaml](seeds/enriched-example.yaml): fully enriched example tasks. It is a fragment (a bare list), not a validatable tasks file.

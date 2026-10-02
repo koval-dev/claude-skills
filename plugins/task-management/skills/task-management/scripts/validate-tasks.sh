@@ -66,6 +66,12 @@ if [[ ! -f "$TASKS_FILE" ]]; then
   exit 1
 fi
 
+# Refuse to write into a generated file
+if [[ "$MODE" == "fix" ]] && head -n 5 "$TASKS_FILE" | grep -qiE 'generated|do not edit'; then
+  echo "Error: $TASKS_FILE is a generated file; --fix would be overwritten. Change tasks in the tracker that owns them." >&2
+  exit 2
+fi
+
 # Check for required tools
 if ! command -v yq &> /dev/null; then
   echo "Error: yq is required. Install with: brew install yq" >&2

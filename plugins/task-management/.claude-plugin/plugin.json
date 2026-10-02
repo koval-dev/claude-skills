@@ -1,9 +1,12 @@
 {
   "name": "task-management",
-  "description": "Platform-agnostic task management with schema validation, enrichment, and agent-tier routing. Works with YAML-based task trackers across projects.",
-  "version": "1.0.1",
+  "description": "Validate, enrich, and route tasks in repos that keep them in a tasks.yaml file. Does not apply to GitHub Projects or other external trackers, and never writes into a generated snapshot.",
+  "version": "1.1.0",
   "skills": [
     "./skills/task-management",
     "./skills/task-enrichment"
-  ]
+  ],
+  "author": {
+    "name": "koval.dev"
+  }
 }

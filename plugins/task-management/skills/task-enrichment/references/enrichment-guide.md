@@ -1,5 +1,7 @@
 # Enrichment Guide
 
+Contents: Core Principle · Process Flow · Task Type Identification · Minimal Context Rules · Context Scoring · Enrichment Checklist · Common Enrichment Patterns
+
 How to scope minimum required context for task completion.
 
 ## Core Principle
