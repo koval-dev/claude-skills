@@ -1,13 +1,15 @@
 # Mobile UX and Native-Feel Criteria
 
+Contents: 1 Layout, viewport, and safe regions · 2 Touch targets · 3 Navigation and thumb reach · 4 Forms and the virtual keyboard · 5 Sheets, dialogs, menus · 6 Visual hierarchy and states · 7 Platform feel (iOS, Android) · 8 Accessibility · 9 Motion and performance · 10 Priority examples · Reference anchors
+
 Use this file as a decision guide, not as a visual template. The goal is a polished mobile web product that respects iOS and Android expectations without pretending to be a native binary.
 
 ## 1. Layout, viewport, and safe regions
 
 - The scoped UI must work at 320 CSS px wide without horizontal page scrolling, clipped controls, or unreadable compression.
 - Use fluid layout rules. Avoid fixed widths and fixed device-height assumptions.
-- Prefer `min-height: 100dvh` for full-height application shells, with a suitable fallback for older browsers. Do not rely on `100vh` alone when mobile browser chrome can change the visible height.
-- Use `viewport-fit=cover` only when the product intentionally draws edge to edge and the layout accounts for `env(safe-area-inset-top)`, `env(safe-area-inset-right)`, `env(safe-area-inset-bottom)`, and `env(safe-area-inset-left)` where needed.
+- Use `min-height: 100dvh` for full-height application shells; use `svh` for a height that must not change as browser chrome moves, and `lvh` for the largest. Keep a `100vh` fallback declaration only when the project supports browsers from before 2022. Do not rely on `100vh` alone.
+- Use `viewport-fit=cover` only when the product intentionally draws edge to edge and the layout accounts for `env(safe-area-inset-top)`, `env(safe-area-inset-right)`, `env(safe-area-inset-bottom)`, and `env(safe-area-inset-left)` where needed. On iOS 26 Safari and Chrome 135+ on Android the browser bars are translucent or retract on scroll, so test fixed bottom UI both with and without `cover` before choosing.
 - Add safe-area padding to fixed bottom navigation, sticky action bars, sheets, media controls, and full-screen overlays.
 - Add content padding or scroll padding equal to the occupied height of fixed UI so the last item and focused controls remain reachable.
 - Account for notches, rounded corners, home indicators, gesture-navigation regions, status bars, and display cutouts.
@@ -58,6 +60,7 @@ Use this file as a decision guide, not as a visual template. The goal is a polis
 - Preserve entered values when validation fails.
 - Place errors near their field and provide a summary when many fields fail at once.
 - Move focus to the first invalid field or error summary only when it helps the user recover; do not create a focus loop.
+- Keyboard resize behavior differs by browser. Chrome on Android honors `interactive-widget` in the viewport meta (`resizes-visual`, `resizes-content`, `overlays-content`); do not rely on it in Safari. The VirtualKeyboard API (`navigator.virtualKeyboard.overlaysContent`, `env(keyboard-inset-height)`) is Chromium-only and experimental, so use it only as progressive enhancement.
 - Use loading and submission guards to prevent duplicate actions.
 - Prefer native date, time, file, and select controls when they meet the product need. A custom control carries a much higher accessibility and keyboard burden.
 - Give password visibility, clear, increment, and decrement controls full touch targets and accessible names.
@@ -74,6 +77,8 @@ Use this file as a decision guide, not as a visual template. The goal is a polis
 - Avoid nested scroll areas unless the interaction truly needs them.
 - Menus must remain inside the visible viewport and expose the same actions to touch and keyboard users.
 - Confirm destructive actions when recovery is difficult. Do not add confirmations to harmless, easy-to-undo actions.
+- Prefer native `<dialog>` opened with `showModal()` for modal surfaces: it provides focus containment, Escape to close, and top-layer stacking. `closedby="any"` gives light dismiss in Chromium and Firefox but not in Safari, so keep an explicit close control and a click-outside fallback.
+- Use the `popover` attribute for menus and other non-modal surfaces before reaching for a script-positioned overlay.
 
 ## 6. Visual hierarchy, density, and content states
 
@@ -105,12 +110,13 @@ Use this file as a decision guide, not as a visual template. The goal is a polis
 - Verify text inputs do not cause an unexpected zoom or hide the current task.
 - Use sheet-like motion and layering only when it matches the product's component system.
 - Do not place critical controls where browser or system edge gestures make them hard to use.
+- In iOS 26 Safari the toolbar and tab bar float translucently over the page. Developers report that `theme-color` is no longer used for the bar tint, which comes from the page or from a fixed element's background, and that safe-area values for fixed elements do not always account for the toolbar. Set the `html`/`body` background to the color the bars should show, and check fixed bottom actions, dialogs, and sheets in the iOS Simulator or on a device; desktop emulation does not reproduce this.
 
 ### Android-aware checks
 
 - Favor generous 48 px-class hit areas for interactive elements when the layout has room.
 - Preserve browser or system Back behavior across routes and modal surfaces.
-- Account for gesture-navigation and system-bar insets in edge-to-edge layouts.
+- Chrome 135+ on Android draws web content edge to edge on phones. Without `viewport-fit=cover`, a bottom "chin" retracts on scroll and `env(safe-area-inset-bottom)` changes as it moves; for fixed bottom elements combine `env(safe-area-inset-bottom, 0px)` with `--safe-area-max-inset-bottom` as described in the Chrome edge-to-edge guide.
 - Give taps a clear pressed-state layer or equivalent immediate feedback.
 - Do not intercept overscroll, edge gestures, or Back merely to mimic another platform.
 - Test a slightly wider compact viewport and varied aspect ratios; Android phones are not one fixed size.
@@ -173,7 +179,7 @@ Use this file as a decision guide, not as a visual template. The goal is a polis
 
 ## Reference anchors
 
-These sources define the baseline behind this checklist:
+These sources define the baseline behind this checklist (checked 2026-10-02):
 
 - Apple UI Design Dos and Don'ts: https://developer.apple.com/design/tips/
 - Apple Human Interface Guidelines, Buttons: https://developer.apple.com/design/human-interface-guidelines/buttons
@@ -183,3 +189,6 @@ These sources define the baseline behind this checklist:
 - Material 3 interaction states: https://m3.material.io/foundations/interaction/states/overview
 - WCAG 2.2 target size minimum: https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum
 - WCAG 2.2: https://www.w3.org/TR/WCAG22/
+- Chrome edge-to-edge on Android: https://developer.chrome.com/docs/css-ui/edge-to-edge
+- Viewport meta (`viewport-fit`, `interactive-widget`): https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name/viewport
+- `<dialog>`: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog

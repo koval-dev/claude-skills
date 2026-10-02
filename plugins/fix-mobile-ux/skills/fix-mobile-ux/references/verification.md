@@ -1,5 +1,7 @@
 # Verification Guide
 
+Contents: 1 Choose the available path · 2 Viewport matrix · 3 Primary-task walkthrough · 4 Input and keyboard · 5 Touch · 6 Responsive and accessibility states · 7 Code validation · 8 Final diff review · 9 Completion threshold
+
 Use the strongest verification path the repository already supports. Do not install a browser stack or test framework merely to satisfy this checklist.
 
 ## 1. Choose the available path

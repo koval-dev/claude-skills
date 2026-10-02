@@ -1,5 +1,8 @@
 {
   "name": "fix-mobile-ux",
-  "description": "Audit and repair a defined web UI scope for mobile usability and a credible iOS and Android native feel — responsive layout, safe areas, touch targets, mobile navigation, sheets, keyboard behavior, and accessibility — inspecting the existing design system and verifying the result without redesigning unrelated areas.",
-  "version": "1.0.1"
+  "description": "Audit and repair a defined web UI scope for mobile usability and a credible iOS and Android native feel \u2014 responsive layout, safe areas, touch targets, mobile navigation, sheets, keyboard behavior, and accessibility \u2014 inspecting the existing design system and verifying the result without redesigning unrelated areas.",
+  "version": "1.1.0",
+  "author": {
+    "name": "koval.dev"
+  }
 }

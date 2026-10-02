@@ -1,7 +1,10 @@
 ---
 name: fix-mobile-ux
-description: Audits and repairs a defined web UI scope for mobile usability and a credible iOS and Android native feel. Use when a route, component, folder, screen, or user flow needs responsive layout fixes, safe-area handling, touch targets, mobile navigation, sheets and dialogs, keyboard behavior, interaction states, accessibility, or mobile polish. It inspects the existing design system, changes the code, and verifies the result without redesigning unrelated areas.
+description: Fixes mobile web UX for a named route, component, folder, screen, or flow: responsive layout, safe-area insets, touch targets, mobile navigation, bottom sheets and dialogs, virtual-keyboard behavior, sticky actions, interaction states, mobile accessibility, and iOS/Android browser quirks. Use when the request is about phones, small screens, or a mobile-feeling UI, or when something is clipped, hidden, or unreachable on mobile. Audits, edits the code within scope, and verifies at mobile viewports. Not for desktop or visual redesign, or for restyling an unfinished-looking page; use art-directed-web-design for that.
 argument-hint: [file-route-component-or-flow]
+metadata:
+  last-reviewed: "2026-10-02"
+  reviewed-against: "Claude Code 2.1.285; code.claude.com/docs/en/skills; WCAG 2.2; developer.chrome.com/docs/css-ui/edge-to-edge; MDN viewport, dialog, VirtualKeyboard"
 ---
 
 # Fix Mobile UX
@@ -30,6 +33,24 @@ The expected output is:
 
 No external connector is required. Use repository files, project scripts, and browser or test tooling already available in the environment.
 
+## Constraints
+
+These hold in every mode. Each protects the user from a regression the fix was meant to prevent.
+
+- Do not redesign unrelated screens.
+- Do not replace the existing design language with generic mobile styling.
+- Do not make the Android version imitate iOS or the iOS version imitate Android.
+- Do not use hover as the only signal or the only way to reveal an action.
+- Do not remove focus outlines without an equally clear replacement.
+- Do not disable page zoom or use `user-scalable=no`.
+- Do not intercept browser Back without a strong product reason and a tested fallback.
+- Do not rely on a fixed phone height or `100vh` alone for full-height mobile layouts.
+- Do not use user-agent sniffing for layout when CSS capabilities or viewport features can solve it.
+- Do not add a new UI framework, animation library, or testing package for a local repair unless the project already needs it and the benefit is clear.
+- Do not change copy, business rules, or data models merely to make the layout easier.
+- Do not conceal overflow to mask clipped content.
+- Do not invent haptic feedback for the web. Use it only when the project already has a supported, optional implementation.
+
 ## Invocation examples
 
 ```text
@@ -44,15 +65,7 @@ When `$ARGUMENTS` is empty, use the target named in the current request. If no t
 
 ## Required workflow
 
-Track this sequence and complete it in order:
-
-1. Define the boundary.
-2. Inspect the current implementation and design conventions.
-3. Establish a mobile baseline.
-4. Rank defects by user impact.
-5. Apply focused fixes.
-6. Verify behavior, layout, accessibility, and code quality.
-7. Review the final diff and report.
+Work through the six stages below in order.
 
 ### 1. Define the boundary
 
@@ -128,22 +141,6 @@ The task is complete only when:
 - Changed code passes the relevant available checks.
 - The final diff stays within scope, apart from clearly named shared dependencies.
 
-## Non-negotiable guardrails
-
-- Do not redesign unrelated screens.
-- Do not replace the existing design language with generic mobile styling.
-- Do not make the Android version imitate iOS or the iOS version imitate Android.
-- Do not use hover as the only signal or the only way to reveal an action.
-- Do not remove focus outlines without an equally clear replacement.
-- Do not disable page zoom or use `user-scalable=no`.
-- Do not intercept browser Back without a strong product reason and a tested fallback.
-- Do not rely on a fixed phone height or `100vh` alone for full-height mobile layouts.
-- Do not use user-agent sniffing for layout when CSS capabilities or viewport features can solve it.
-- Do not add a new UI framework, animation library, or testing package for a local repair unless the project already needs it and the benefit is clear.
-- Do not change copy, business rules, or data models merely to make the layout easier.
-- Do not conceal overflow to mask clipped content.
-- Do not invent haptic feedback for the web. Use it only when the project already has a supported, optional implementation.
-
 ## Final report
 
 Use this compact structure:
@@ -168,7 +165,3 @@ Remaining:
 ```
 
 For `audit-only`, replace `Fixed` with `Findings` and group findings by P0 through P3. For `plan-only`, replace it with `Plan`, ordered by dependency and impact.
-
-## Skill maintenance
-
-Use [references/evals.json](references/evals.json) only when testing or revising this skill. Do not load it during ordinary mobile UI work.
