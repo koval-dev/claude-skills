@@ -1,0 +1,7 @@
+{
+  "name": "fixture-shop",
+  "private": true,
+  "scripts": {
+    "check": "node scripts/check.mjs"
+  }
+}

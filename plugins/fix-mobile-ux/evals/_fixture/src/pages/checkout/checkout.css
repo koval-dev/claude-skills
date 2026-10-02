@@ -1,0 +1,52 @@
+.shell {
+  height: 100vh;
+  overflow: hidden;
+  padding: var(--space-3);
+}
+
+.form input {
+  display: block;
+  width: 360px;
+  margin-bottom: var(--space-2);
+  padding: 4px 6px;
+  font-size: 13px;
+  border: 1px solid var(--color-muted);
+  border-radius: var(--radius);
+}
+
+.row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.row input {
+  width: 176px;
+}
+
+.errors {
+  color: var(--color-danger);
+  margin-top: var(--space-4);
+}
+
+.pay-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-3);
+  background: var(--color-surface);
+}
+
+.pay {
+  height: 30px;
+  padding: 0 var(--space-2);
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--color-accent);
+  color: #fff;
+  outline: none;
+}

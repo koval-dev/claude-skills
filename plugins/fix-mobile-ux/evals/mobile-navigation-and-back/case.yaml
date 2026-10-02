@@ -1,0 +1,38 @@
+schema_version: "1.1"
+name: mobile-navigation-and-back
+description: Fix mode on a dashboard with an icon-only bottom nav, a div filter sheet, hover-only actions, and a Back trap.
+context:
+  scaffold_script: scaffold.sh
+execution:
+  prompt: "/fix-mobile-ux src/pages/dashboard; focus: bottom navigation, filter sheet, Android Back behavior"
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Edit, Write, Bash, Skill]
+graders:
+  - name: nav-respects-safe-area
+    type: regex
+    target: { source: file, path: src/pages/dashboard/dashboard.css }
+    pattern: "safe-area-inset-bottom"
+  - name: hover-only-reveal-removed
+    type: regex
+    target: { source: file, path: src/pages/dashboard/dashboard.css }
+    pattern: ":hover\\s+\\.delete\\s*\\{\\s*visibility:\\s*visible"
+    match: not_contains
+  - name: about-page-untouched
+    type: regex
+    target: { source: file, path: src/pages/about/index.html }
+    pattern: "Small-batch goods, shipped from Thunder Bay.</p>\\s*</section>"
+  - name: back-and-sheet-behavior
+    type: llm
+    weight: 2
+    focus: { source: file, path: src/pages/dashboard/dashboard.js }
+    criteria: |
+      - The popstate handler no longer re-pushes history unconditionally, so Back can leave the page.
+      - Pressing Back while the filter sheet is open closes the sheet.
+      - Opening the sheet moves focus into it, and closing it returns focus to the control that opened it (or the sheet is a native <dialog> opened with showModal()).
+  - name: nav-and-controls-accessible
+    type: llm
+    focus: { source: file, path: src/pages/dashboard/index.html }
+    criteria: |
+      - Each bottom-navigation link has an accessible name (visible text or aria-label).
+      - The Filters and Apply controls are real buttons, not span or div elements.

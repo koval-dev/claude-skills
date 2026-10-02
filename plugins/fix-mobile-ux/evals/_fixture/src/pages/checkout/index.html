@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Checkout</title>
+  <link rel="stylesheet" href="../../styles/tokens.css">
+  <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+  <div class="shell">
+    <h1>Checkout</h1>
+    <form id="checkout" class="form">
+      <input id="name" type="text" placeholder="Full name">
+      <input id="email" type="text" placeholder="Email">
+      <input id="phone" type="text" placeholder="Phone">
+      <input id="card" type="text" placeholder="Card number">
+      <div class="row">
+        <input id="expiry" type="text" placeholder="MM/YY">
+        <input id="cvc" type="text" placeholder="CVC">
+      </div>
+      <input id="postcode" type="text" placeholder="Postal code">
+      <p class="errors" id="errors"></p>
+    </form>
+  </div>
+  <div class="pay-bar">
+    <span class="total">Total $84.00</span>
+    <button form="checkout" class="pay">Pay</button>
+  </div>
+</body>
+</html>

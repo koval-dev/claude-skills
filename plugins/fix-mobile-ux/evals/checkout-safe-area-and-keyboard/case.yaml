@@ -1,0 +1,40 @@
+schema_version: "1.1"
+name: checkout-safe-area-and-keyboard
+description: Fix mode on a checkout page with a fixed pay bar, placeholder-only fields, and locked zoom.
+context:
+  scaffold_script: scaffold.sh
+execution:
+  prompt: "/fix-mobile-ux src/pages/checkout; focus: sticky payment action, form keyboard, safe areas"
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Edit, Write, Bash, Skill]
+graders:
+  - name: pay-bar-respects-safe-area
+    type: regex
+    target: { source: file, path: src/pages/checkout/checkout.css }
+    pattern: "safe-area-inset-bottom"
+  - name: zoom-unlocked
+    type: regex
+    target: { source: file, path: src/pages/checkout/index.html }
+    pattern: "user-scalable\\s*=\\s*no|maximum-scale\\s*=\\s*1\\b"
+    match: not_contains
+  - name: autofill-hints-added
+    type: regex
+    target: { source: file, path: src/pages/checkout/index.html }
+    pattern: "autocomplete=\"(email|cc-number|tel|postal-code|name)\""
+  - name: visible-labels-added
+    type: regex
+    target: { source: file, path: src/pages/checkout/index.html }
+    pattern: "<label"
+  - name: about-page-untouched
+    type: regex
+    target: { source: file, path: src/pages/about/index.html }
+    pattern: "Small-batch goods, shipped from Thunder Bay.</p>\\s*</section>"
+  - name: report-quality
+    type: llm
+    weight: 2
+    criteria: |
+      - The final message reports the fixes it made, not only recommendations.
+      - It names the content hidden behind the fixed pay bar (or the missing bottom padding) as fixed.
+      - It names the viewports or checks it validated with, or states plainly that no browser was available.
+      - It lists the files changed, and they are all under src/pages/checkout or src/styles.
