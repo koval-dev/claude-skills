@@ -23,6 +23,7 @@ the task level. The helper checks both.
 - `rank_absolute` — position across the whole SERP (organic + features), not just organic order.
 - `intersections` (competitors) — number of keywords the competitor shares with the target domain.
 - `organic_etv` — estimated traffic value: modeled monthly organic clicks for that domain.
+- `competitors`: `organic_keywords` and `organic_etv` describe the competitor's whole domain (`full_domain_metrics`); the default ordering uses traffic on the shared keywords (`metrics.organic.etv`).
 
 ## Ordering and limits
 
