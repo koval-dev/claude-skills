@@ -41,13 +41,13 @@ Commit this to a project's `.claude/settings.json` and teammates get the marketp
 
 ## Skills
 
-| Plugin | What it does |
-| --- | --- |
-| `art-directed-web-design` | Turns a working but visually plain semantic page (Astro, HTML, JSX/TSX, Vue, Svelte) into an intentional, typography-led, grid-based composition — implemented directly in place, reusing the project's existing tokens and utilities. |
-| `find-content-opportunities` | Researches, scores, and prioritizes evidence-backed content opportunities (skyscraper topics, content gaps, topic clusters) for an existing project, then produces approvable opportunity briefs to hand to a writing skill. Vendor-neutral about data sources. |
-| `dataforseo-connector` | A secret-free connector to the DataForSEO API: keyword search volume, keyword ideas, a domain's ranked keywords, live SERP results, and competitor domains. Useful on its own and as a data source other skills build on. |
-| `task-management` | Platform-agnostic task management with schema validation, enrichment, and agent-tier routing. Use when creating, validating, enriching, or executing tasks from YAML-based task trackers. |
-| `fix-mobile-ux` | Audits and repairs a scoped web UI for mobile usability and a credible iOS/Android native feel — responsive layout, safe areas, touch targets, mobile navigation, sheets, keyboard, and accessibility — inspecting the existing design system and verifying without redesigning unrelated areas. |
+| Plugin | What it does | Last reviewed |
+| --- | --- | --- |
+| `art-directed-web-design` | Turns a working but visually plain semantic page (Astro, HTML, JSX/TSX, Vue, Svelte) into an intentional, typography-led, grid-based composition — implemented directly in place, reusing the project's existing tokens and utilities. | 2026-10-02 |
+| `find-content-opportunities` | Researches, scores, and prioritizes evidence-backed content opportunities (skyscraper topics, content gaps, topic clusters) for an existing project, then produces approvable opportunity briefs to hand to a writing skill. Vendor-neutral about data sources. | 2026-10-02 |
+| `dataforseo-connector` | A secret-free connector to the DataForSEO API: keyword search volume, keyword ideas, a domain's ranked keywords, live SERP results, and competitor domains. Useful on its own and as a data source other skills build on. | 2026-10-02 |
+| `task-management` | Validates, enriches, and routes tasks in repos that keep them in a `tasks.yaml` file. Not for GitHub Projects or other external trackers, and never writes into a generated snapshot. | 2026-10-02 |
+| `fix-mobile-ux` | Audits and repairs a scoped web UI for mobile usability and a credible iOS/Android native feel — responsive layout, safe areas, touch targets, mobile navigation, sheets, keyboard, and accessibility — inspecting the existing design system and verifying without redesigning unrelated areas. | 2026-10-02 |
 
 ## Connectors and credentials
 

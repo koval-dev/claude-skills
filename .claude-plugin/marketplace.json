@@ -11,27 +11,27 @@
     {
       "name": "art-directed-web-design",
       "source": "./plugins/art-directed-web-design",
-      "description": "Transform an existing semantically structured web page into a polished, distinctive, typography-led and grid-based design, implemented directly in place."
+      "description": "Redesigns an existing semantic web page in place into a typography-led, grid-based composition using the project's own tokens, components, and accessibility."
     },
     {
       "name": "find-content-opportunities",
       "source": "./plugins/find-content-opportunities",
-      "description": "Discover, research, score, and prioritize evidence-backed content opportunities (including skyscraper topics and content gaps) for an existing project, and produce approvable opportunity briefs to hand to a separate writing skill."
+      "description": "Discover, research, classify, score, and prioritize evidence-backed content opportunities for a business before drafting begins, including skyscraper opportunities, content gaps, and topic clusters. Produces approvable opportunity briefs to hand to a separate writing skill."
     },
     {
       "name": "dataforseo-connector",
       "source": "./plugins/dataforseo-connector",
-      "description": "Query the DataForSEO API for keyword search volume, keyword ideas, a domain's ranked keywords, live SERP results, and competitor domains. Reads credentials from environment variables and ships no secrets."
+      "description": "Query the DataForSEO API for keyword search volume, keyword ideas, a domain's ranked keywords, live SERP results, and competitor domains. Reads credentials from environment variables and ships no secrets. Useful on its own for quick SEO lookups and as a data source that other content and SEO skills can build on."
     },
     {
       "name": "task-management",
       "source": "./plugins/task-management",
-      "description": "Platform-agnostic task management with schema validation, enrichment, and agent-tier routing. Use when creating, validating, enriching, or executing tasks from YAML-based task trackers."
+      "description": "Validate, enrich, and route tasks in repos that keep them in a tasks.yaml file. Does not apply to GitHub Projects or other external trackers, and never writes into a generated snapshot."
     },
     {
       "name": "fix-mobile-ux",
       "source": "./plugins/fix-mobile-ux",
-      "description": "Audit and repair a scoped web UI for mobile usability and a credible iOS and Android native feel — responsive layout, safe areas, touch targets, mobile navigation, sheets, keyboard, and accessibility — inspecting the existing design system and verifying without redesigning unrelated areas."
+      "description": "Audit and repair a defined web UI scope for mobile usability and a credible iOS and Android native feel — responsive layout, safe areas, touch targets, mobile navigation, sheets, keyboard behavior, and accessibility — inspecting the existing design system and verifying the result without redesigning unrelated areas."
     }
   ]
 }
