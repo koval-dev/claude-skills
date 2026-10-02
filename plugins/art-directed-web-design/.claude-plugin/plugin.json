@@ -1,5 +1,8 @@
 {
   "name": "art-directed-web-design",
-  "description": "Transform an existing semantically structured web page into a polished, distinctive, typography-led and grid-based design while preserving its content, accessibility, project conventions, and existing design tokens.",
-  "version": "1.0.1"
+  "description": "Redesigns an existing semantic web page in place into a typography-led, grid-based composition using the project's own tokens, components, and accessibility.",
+  "version": "1.1.0",
+  "author": {
+    "name": "koval.dev"
+  }
 }

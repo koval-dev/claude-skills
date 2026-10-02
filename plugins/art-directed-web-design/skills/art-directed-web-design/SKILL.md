@@ -1,7 +1,10 @@
 ---
 name: art-directed-web-design
-description: Transforms an existing semantically structured web page into a polished, distinctive, typography-led and grid-based design while preserving its content, accessibility, project conventions, and existing design tokens. Use when an Astro, HTML, JSX, TSX, Vue, Svelte, or similar page already has sections and content but looks plain, minimally spaced, unfinished, or visually generic, and the user wants the strongest design direction implemented directly rather than receiving mockups, screenshots, or several design options.
+description: Redesigns an existing web page in place as an art-directed, typography-led, CSS Grid editorial composition, with no mockups or design options. Use for restyle, redesign, visual polish, layout recomposition, or "looks plain, generic, or unfinished" requests on a page that already has semantic sections and real content (Astro, HTML, JSX/TSX, Vue, Svelte, Tailwind). Reuses the project's existing tokens, components, and accessibility. Prefer frontend-design for greenfield UI or choosing an aesthetic from scratch, and fix-mobile-ux for mobile-only usability, touch targets, and native feel.
 argument-hint: [page-file-or-route]
+metadata:
+  last-reviewed: "2026-10-02"
+  reviewed-against: "Claude Code 2.1.285; code.claude.com/docs/en/skills"
 ---
 
 # Art-Directed Web Design
@@ -27,7 +30,7 @@ Inspect:
 
 - the target page and its semantic section structure;
 - `global.css` and other global styles;
-- Tailwind theme variables, `@theme` declarations, and project utilities;
+- Tailwind theme variables and `@theme` declarations, if the project uses Tailwind, and other project utilities;
 - existing typography, container, spacing, colour, radius, border, and layout conventions;
 - shared components that can be reused;
 - nearby pages that represent the current brand;
@@ -107,13 +110,13 @@ Read `references/grid-and-typography.md` for the composition rules.
 - Keep page-specific composition local to the page or component when it is not reusable.
 - Preserve semantic HTML, keyboard access, focus states, reduced-motion preferences, contrast, and logical reading order.
 - Avoid unnecessary client-side JavaScript.
-- Keep Astro components server-rendered unless interactivity requires otherwise.
+- In Astro, keep components server-rendered unless interactivity requires otherwise.
 
 ### 7. Check the result in the running site
 
 Run the normal local development or validation commands available in the project. Open the resulting page when browser tooling is available and inspect the actual result at desktop and narrow widths.
 
-Do not create a screenshot report. Fix visible problems directly, then leave the working implementation for the user to review.
+Fix visible problems directly, then leave the working implementation for the user to review.
 
 At minimum, check:
 
@@ -156,5 +159,3 @@ Give the user a short summary containing:
 - the main files changed;
 - any meaningful new reusable utility or token added;
 - the command or route needed to view the page, when useful.
-
-Do not present unused concepts or a long design critique unless requested.
