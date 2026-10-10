@@ -1,0 +1,4 @@
+interface:
+  display_name: "Art-Directed Web Design"
+  short_description: "Recompose existing pages with typography and grids"
+  default_prompt: "Use $art-directed-web-design to redesign this existing page in place using its current design system."

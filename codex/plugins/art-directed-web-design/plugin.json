@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "art-directed-web-design",
+  "version": "1.0.0",
+  "description": "Recompose existing web pages with art-directed typography, grids, and purposeful visual hierarchy using the project's design system.",
+  "author": {
+    "name": "koval.dev"
+  }
+}

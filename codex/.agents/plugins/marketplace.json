@@ -1,0 +1,20 @@
+{
+  "name": "kd-codex-skills",
+  "interface": {
+    "displayName": "koval.dev Codex Skills"
+  },
+  "plugins": [
+    {
+      "name": "art-directed-web-design",
+      "source": {
+        "source": "local",
+        "path": "./plugins/art-directed-web-design"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
