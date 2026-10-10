@@ -1,0 +1,6 @@
+interface:
+  display_name: "Fix Mobile UX"
+  short_description: "Repair scoped mobile layout and interaction problems"
+  default_prompt: "Use $fix-mobile-ux to repair mobile usability in this route or component while preserving its design and behavior."
+policy:
+  allow_implicit_invocation: true

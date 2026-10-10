@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "fix-mobile-ux",
+  "version": "1.0.0",
+  "description": "Repair scoped mobile web usability while preserving the product's design and behavior.",
+  "author": {
+    "name": "koval.dev"
+  }
+}

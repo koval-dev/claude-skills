@@ -2,7 +2,7 @@
 
 Reusable [Claude Code](https://code.claude.com) skills maintained by koval.dev, distributed as a plugin marketplace so they can be installed on any machine and shared across the team.
 
-Codex adaptations are available in [codex/](codex/README.md), starting with `art-directed-web-design`. That version keeps the typography and grid approach, makes section numbering purposeful and limited, and includes its own plugin package and installation instructions.
+Codex adaptations of `art-directed-web-design` and `fix-mobile-ux` are available in [codex/](codex/README.md), with separate plugin packages and installation instructions. The mobile skill repairs scoped usability problems while preserving the product's design and behavior.
 
 ## Install
 

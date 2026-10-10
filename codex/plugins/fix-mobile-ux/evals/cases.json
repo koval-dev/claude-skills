@@ -1,0 +1,57 @@
+[
+  {
+    "id": "checkout-safe-area-and-keyboard",
+    "prompt": "Use $fix-mobile-ux on src/pages/checkout; focus on sticky payment action, form keyboard, and safe areas.",
+    "scope": ["src/pages/checkout/", "src/styles/"],
+    "runtime": "checkout",
+    "rubric": "The report describes actual checkout repairs, including reachable fields and content clearance around the payment action, names checks actually run, lists changed files, and explicitly distinguishes viewport tests from unavailable real-device keyboard, chrome, and safe-area checks."
+  },
+  {
+    "id": "mobile-navigation-and-back",
+    "prompt": "The dashboard at src/pages/dashboard is hard to use on phones. Fix the bottom navigation, filter sheet, and Android Back behavior; Back should dismiss an open sheet and then be able to leave the page.",
+    "scope": ["src/pages/dashboard/", "src/styles/"],
+    "supportTests": "dashboard",
+    "runtime": "navigation",
+    "rubric": "The report describes navigation and overlay repairs, identifies every changed file including any test file, and names actual validation. Any added test scripts focus on the dashboard repair and do not change unrelated product behavior. The report explicitly distinguishes responsive browser results from unavailable device keyboard, browser chrome, safe areas, and Android system Back checks, without claiming hardware verification."
+  },
+  {
+    "id": "audit-only-component",
+    "prompt": "Use $fix-mobile-ux audit-only src/components/BookingForm.tsx.",
+    "noEdits": true,
+    "rubric": "Ranked findings concern BookingForm.tsx and cover the fixed 420px width, placeholder-only labels, missing email/phone/date input hints, small button targets, alert errors, and absent submitting state. Findings include priorities and remedies. No repaired code or fix-complete claim."
+  },
+  {
+    "id": "neg-desktop-restyle",
+    "prompt": "The about page at src/pages/about/index.html looks plain on desktop. Give it a more distinctive, editorial look.",
+    "scope": ["src/pages/about/", "src/styles/"],
+    "activate": false,
+    "rubric": "The request results in an actual desktop visual restyle of the about page. The report does not claim to have used fix-mobile-ux."
+  },
+  {
+    "id": "plan-only",
+    "prompt": "Use $fix-mobile-ux plan-only on src/pages/checkout. Give me a repair plan for the mobile checkout.",
+    "noEdits": true,
+    "rubric": "An actionable prioritized plan names checkout source files, root causes, dependencies or ordering, concrete repairs for zoom, labels/input hints, overflow and payment-action clearance, acceptance checks at mobile and desktop sizes, and verification limitations. It does not claim repairs were completed."
+  },
+  {
+    "id": "strict-scope",
+    "prompt": "Use $fix-mobile-ux strict-scope on src/pages/checkout. The checkout's payment action disappears on phones. Repair what the scope permits and report any required shared change.",
+    "scope": ["src/pages/checkout/"],
+    "setup": "shared-action",
+    "rubric": "The report identifies src/styles/tokens.css as the source of the shared mobile .pay display:none !important rule, says strict-scope prevents editing that shared file, and names the required shared repair and caller impact. It reports the action as still blocked, not fixed. It does not add a local override or competing payment control to bypass the shared constraint."
+  },
+  {
+    "id": "missing-target",
+    "prompt": "Use $fix-mobile-ux to fix mobile UX.",
+    "noEdits": true,
+    "rubric": "The response asks which single route, component, directory, screen, or flow to target, waits for that answer, and does not provide a repository-wide audit or select a target on its own."
+  },
+  {
+    "id": "unavailable-browser",
+    "prompt": "Use $fix-mobile-ux on src/pages/checkout to fix the mobile checkout. Browser and screenshot tooling are unavailable in this environment; use code checks and state what remains unverified.",
+    "scope": ["src/pages/checkout/", "src/styles/"],
+    "runtime": "checkout",
+    "browserUnavailable": true,
+    "rubric": "The report describes actual repairs and code checks, explicitly states live browser/visual verification was unavailable, and names unverified responsive interaction, virtual-keyboard, moving browser chrome, and safe-area/device behavior. It does not claim those checks passed."
+  }
+]
