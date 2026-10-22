@@ -1,0 +1,40 @@
+schema_version: "1.1"
+name: signup-screenshot
+description: Gestalt analysis of a well-designed signup screenshot; must not invent serious problems or claim measurements it cannot make.
+context:
+  scaffold_script: scaffold.sh
+execution:
+  prompt: "here's a screenshot of our signup page (clean-signup.png). can you do a gestalt analysis on it and tell me if anything should change?"
+  max_turns: 25
+  timeout_seconds: 600
+  allowed_tools: [Read, Glob, Grep, Bash, Edit, Write, Skill]
+graders:
+  - name: no-edits
+    type: tool_used
+    tool: Edit
+    min: 0
+    max: 0
+    arm: both
+  - name: no-writes
+    type: tool_used
+    tool: Write
+    min: 0
+    max: 0
+    arm: both
+  - name: template-sections
+    type: regex
+    pattern: "## First impression[\\s\\S]*## What's working[\\s\\S]*## Findings[\\s\\S]*## Principles at a glance[\\s\\S]*## Top 3 next steps"
+  - name: all-12-principles
+    type: regex
+    pattern: "Similarity[\\s\\S]*Proximity[\\s\\S]*Continuity[\\s\\S]*Closure[\\s\\S]*Figure/Ground[\\s\\S]*Prägnanz[\\s\\S]*Common Fate[\\s\\S]*Common Region[\\s\\S]*Uniform Connectedness[\\s\\S]*Emergence[\\s\\S]*Invariance[\\s\\S]*Multistability"
+  - name: no-high-findings
+    type: regex
+    pattern: "### \\d+\\..*\\bHigh\\b"
+    match: not_contains
+  - name: common-fate-not-assessed
+    type: regex
+    pattern: "Common Fate[^\\n]*Not assessed"
+  - name: says-values-are-estimates
+    type: llm
+    criteria: |
+      - The report says its spacing, alignment, or colour values are estimates from the screenshot rather than measurements.

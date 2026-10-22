@@ -1,0 +1,55 @@
+schema_version: "1.1"
+name: pricing-page-code
+description: Review a cluttered pricing page from its HTML; must report measured, ranked findings and edit nothing.
+context:
+  scaffold_script: scaffold.sh
+execution:
+  prompt: "I built this pricing page (messy-pricing.html). Something feels off about it but I can't say what. Can you review the design and tell me what to fix? Explain the principles behind it, I'm still learning."
+  max_turns: 30
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Bash, Edit, Write, Skill]
+graders:
+  - name: no-edits
+    type: tool_used
+    tool: Edit
+    min: 0
+    max: 0
+    arm: both
+  - name: no-writes
+    type: tool_used
+    tool: Write
+    min: 0
+    max: 0
+    arm: both
+  - name: page-untouched
+    type: regex
+    target: { source: file, path: messy-pricing.html }
+    pattern: "input:focus, button:focus \\{ outline: none; \\}"
+  - name: template-sections
+    type: regex
+    pattern: "## First impression[\\s\\S]*## What's working[\\s\\S]*## Findings[\\s\\S]*## Principles at a glance[\\s\\S]*## Top 3 next steps"
+  - name: all-12-principles
+    type: regex
+    pattern: "Similarity[\\s\\S]*Proximity[\\s\\S]*Continuity[\\s\\S]*Closure[\\s\\S]*Figure/Ground[\\s\\S]*Prägnanz[\\s\\S]*Common Fate[\\s\\S]*Common Region[\\s\\S]*Uniform Connectedness[\\s\\S]*Emergence[\\s\\S]*Invariance[\\s\\S]*Multistability"
+  - name: findings-have-severity
+    type: regex
+    pattern: "### 1\\. .*\\b(High|Medium|Low)\\b"
+  - name: price-label-contrast-measured
+    type: regex
+    pattern: "1\\.9\\d?(:1)?"
+  - name: flags-competing-ctas
+    type: llm
+    criteria: |
+      - A finding says the hero's calls to action compete, with no single primary action.
+  - name: flags-nested-boxes
+    type: llm
+    criteria: |
+      - A finding flags boxes or bordered containers nested inside each other in the plan cards.
+  - name: flags-focus-outline
+    type: llm
+    criteria: |
+      - A finding flags that the focus outline is removed (outline: none), hiding keyboard focus.
+  - name: flags-missing-viewport
+    type: llm
+    criteria: |
+      - The report flags the missing viewport meta tag or the lack of a responsive or mobile layout.

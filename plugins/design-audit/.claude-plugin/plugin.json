@@ -1,0 +1,8 @@
+{
+  "name": "design-audit",
+  "description": "Audit the design of a screenshot, live URL, or web UI code through Gestalt principles, visual hierarchy and typography, colour and accessibility, layout and spacing, usability heuristics, and consistency. Writes a teaching-oriented report with ranked findings and concrete fixes, and never edits files.",
+  "version": "1.0.0",
+  "author": {
+    "name": "koval.dev"
+  }
+}

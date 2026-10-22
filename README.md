@@ -2,7 +2,7 @@
 
 Reusable [Claude Code](https://code.claude.com) skills maintained by koval.dev, distributed as a plugin marketplace so they can be installed on any machine and shared across the team.
 
-Codex adaptations of `art-directed-web-design` and `fix-mobile-ux` are available in [codex/](codex/README.md), with separate plugin packages and installation instructions. The mobile skill repairs scoped usability problems while preserving the product's design and behavior.
+Codex adaptations of `art-directed-web-design` and `fix-mobile-ux` are available in [codex/](codex/README.md), with separate plugin packages and installation instructions. The mobile skill repairs scoped usability problems while preserving the product's design and behavior. `design-audit` needs no adaptation and installs in Codex and Copilot as-is (see [Codex and Copilot](#codex-and-copilot)).
 
 ## Install
 
@@ -13,6 +13,7 @@ Codex adaptations of `art-directed-web-design` and `fix-mobile-ux` are available
 /plugin install dataforseo-connector@kd-skills
 /plugin install task-management@kd-skills
 /plugin install fix-mobile-ux@kd-skills
+/plugin install design-audit@kd-skills
 ```
 
 Restart Claude Code (or run `/plugin`) if a newly installed skill doesn't show up immediately.
@@ -50,6 +51,21 @@ Commit this to a project's `.claude/settings.json` and teammates get the marketp
 | `dataforseo-connector` | A secret-free connector to the DataForSEO API: keyword search volume, keyword ideas, a domain's ranked keywords, live SERP results, and competitor domains. Useful on its own and as a data source other skills build on. | 2026-10-02 |
 | `task-management` | Validates, enriches, and routes tasks in repos that keep them in a `tasks.yaml` file. Not for GitHub Projects or other external trackers, and never writes into a generated snapshot. | 2026-10-02 |
 | `fix-mobile-ux` | Audits and repairs a scoped web UI for mobile usability and a credible iOS/Android native feel — responsive layout, safe areas, touch targets, mobile navigation, sheets, keyboard, and accessibility — inspecting the existing design system and verifying without redesigning unrelated areas. | 2026-10-02 |
+| `design-audit` | Reviews a screenshot, live URL, or web UI code through the 12 Gestalt principles, visual hierarchy and typography, colour and accessibility, layout and spacing, usability heuristics, and consistency, measuring the rendered page when a browser is available. Writes a teaching-oriented report with ranked findings and concrete fixes; never edits files. Also runs in Codex and Copilot. | 2026-10-22 |
+
+## Codex and Copilot
+
+`design-audit` uses only the shared `SKILL.md` format, so the same folder works in other agents. These install paths follow each tool's documentation but have not been tested yet.
+
+- **Codex**: ask Codex to `Use $skill-installer to install design-audit from https://github.com/koval-dev/claude-skills/tree/main/plugins/design-audit/skills/design-audit`, or copy that folder into `~/.agents/skills/` (or a project's `.agents/skills/`).
+- **Copilot CLI**: it reads this repo's `.claude-plugin/marketplace.json`:
+  ```
+  copilot plugin marketplace add koval-dev/claude-skills
+  copilot plugin install design-audit@kd-skills
+  ```
+- **Copilot in VS Code and the Copilot cloud agent**: copy the folder into `~/.copilot/skills/` (also read from `~/.claude/skills/` and `~/.agents/skills/`), or into a repository's `.github/skills/`.
+
+The other plugins are written for Claude Code. Codex versions of two of them are in [codex/](codex/README.md).
 
 ## Connectors and credentials
 
