@@ -55,17 +55,22 @@ Commit this to a project's `.claude/settings.json` and teammates get the marketp
 
 ## Codex and Copilot
 
-`design-audit` uses only the shared `SKILL.md` format, so the same folder works in other agents. These install paths follow each tool's documentation but have not been tested yet.
+`design-audit` uses only the shared `SKILL.md` format, so the same plugin works in other agents.
 
-- **Codex**: ask Codex to `Use $skill-installer to install design-audit from https://github.com/koval-dev/claude-skills/tree/main/plugins/design-audit/skills/design-audit`, or copy that folder into `~/.agents/skills/` (or a project's `.agents/skills/`).
-- **Copilot CLI**: it reads this repo's `.claude-plugin/marketplace.json`:
+- **Codex**: it reads this repo's `.claude-plugin/marketplace.json`:
+  ```
+  codex plugin marketplace add koval-dev/claude-skills
+  codex plugin add design-audit@kd-skills
+  ```
+  Start a new Codex session afterwards. Run `codex plugin marketplace upgrade kd-skills` to fetch newer versions. The install was checked on 2026-10-23 with codex-cli 0.163.0.
+- **Copilot CLI** (not yet tested): it reads the same marketplace file:
   ```
   copilot plugin marketplace add koval-dev/claude-skills
   copilot plugin install design-audit@kd-skills
   ```
-- **Copilot in VS Code and the Copilot cloud agent**: copy the folder into `~/.copilot/skills/` (also read from `~/.claude/skills/` and `~/.agents/skills/`), or into a repository's `.github/skills/`.
+- **Copilot in VS Code and the Copilot cloud agent** (not yet tested): copy `plugins/design-audit/skills/design-audit/` into `~/.copilot/skills/` (also read from `~/.claude/skills/` and `~/.agents/skills/`), or into a repository's `.github/skills/`.
 
-The other plugins are written for Claude Code. Codex versions of two of them are in [codex/](codex/README.md).
+The other plugins are written for Claude Code. The Codex marketplace lists them too, but for `art-directed-web-design` and `fix-mobile-ux` use the Codex versions in [codex/](codex/README.md).
 
 ## Connectors and credentials
 

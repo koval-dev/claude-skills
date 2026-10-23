@@ -7,7 +7,7 @@ Codex adaptations of the Claude skills in the parent repository:
 | `art-directed-web-design` | 1.0.0 | Recompose an existing page with typography, grid, and its current design system. |
 | `fix-mobile-ux` | 1.0.0 | Repair scoped mobile usability, preserving design and behavior; supports audit-only, plan-only, and strict-scope. |
 
-`design-audit` needs no Codex adaptation, so it has no package here. Install it straight from the parent repository with `Use $skill-installer to install design-audit from https://github.com/koval-dev/claude-skills/tree/main/plugins/design-audit/skills/design-audit`; its `agents/openai.yaml` supplies the Codex UI metadata.
+`design-audit` needs no Codex adaptation, so it has no package here. Install it from the parent repository's marketplace with `codex plugin marketplace add koval-dev/claude-skills` and `codex plugin add design-audit@kd-skills`; its `agents/openai.yaml` supplies the Codex UI metadata.
 
 In `art-directed-web-design`, section headings are unnumbered by default. Newly introduced numbering is limited to one meaningful group per page, such as a process or ranked list. Existing ordered content and explicit user requirements take precedence; dates, statistics, and prices remain intact.
 
