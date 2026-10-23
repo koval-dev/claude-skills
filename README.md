@@ -89,3 +89,7 @@ plugins/<plugin>/skills/<skill>/SKILL.md
 ```
 
 Adding a skill: drop it under `plugins/<plugin>/skills/<skill>/`, add a `plugin.json`, and list the plugin in `marketplace.json`.
+
+## License
+
+[MIT](LICENSE). It covers every plugin in this repo, including the Codex packages in `codex/`.
